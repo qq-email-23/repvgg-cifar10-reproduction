@@ -2,7 +2,7 @@
 
 **外部读者请先看 [REPRODUCE.md](REPRODUCE.md)**：提供从全新克隆、安装环境、下载数据和 Release 权重，到验证全部九个模型及从头训练的完整命令，不依赖作者电脑的本地目录。
 
-代码：[GitHub 仓库](https://github.com/qq-email-23/repvgg-cifar10-reproduction)。权重：[v1.0 Release](https://github.com/qq-email-23/repvgg-cifar10-reproduction/releases/tag/v1.0)（需要作者完成 Publish release 后公开）。
+代码：[GitHub 仓库](https://github.com/qq-email-23/repvgg-cifar10-reproduction)。权重：[v1.0 Release](https://github.com/qq-email-23/repvgg-cifar10-reproduction/releases/tag/v1.0)
 
 截止日期：2026 年 11 月 15 日（北京时间）。当前电脑：Ryzen 7 5800H、约 14 GB 可用物理内存、AMD 核显；本项目使用 CPU FP32。不承诺预先达到某个准确率或固定加速比。
 
