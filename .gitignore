@@ -6,3 +6,6 @@ data/
 *.zip
 *.log
 results/**/test_predictions.npz
+verification/
+SHA256SUMS.txt
+release_check.tmp
