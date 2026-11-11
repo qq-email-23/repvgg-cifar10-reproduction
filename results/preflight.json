@@ -1,0 +1,126 @@
+{
+  "environment": {
+    "python": "3.11.2",
+    "torch": "2.9.1+cpu",
+    "torchvision": "0.24.1+cpu",
+    "numpy": "2.2.6",
+    "os": "Windows-10-10.0.26200-SP0",
+    "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "threads": 8,
+    "device": "cpu",
+    "logical_cpus": 16
+  },
+  "fusion_checks": [
+    {
+      "variant": "baseline",
+      "dtype": "torch.float32",
+      "max_abs_error": 1.4901161193847656e-08,
+      "relative_l2": 9.104534370862893e-08
+    },
+    {
+      "variant": "conv1",
+      "dtype": "torch.float32",
+      "max_abs_error": 3.725290298461914e-08,
+      "relative_l2": 2.676326289474673e-07
+    },
+    {
+      "variant": "full",
+      "dtype": "torch.float32",
+      "max_abs_error": 3.725290298461914e-08,
+      "relative_l2": 2.0164590353033418e-07
+    },
+    {
+      "variant": "baseline",
+      "dtype": "torch.float64",
+      "max_abs_error": 2.7755575615628914e-17,
+      "relative_l2": 3.052428416717811e-16
+    },
+    {
+      "variant": "conv1",
+      "dtype": "torch.float64",
+      "max_abs_error": 5.551115123125783e-17,
+      "relative_l2": 3.2720553393791684e-16
+    },
+    {
+      "variant": "full",
+      "dtype": "torch.float64",
+      "max_abs_error": 6.938893903907228e-17,
+      "relative_l2": 3.6459492821628824e-16
+    }
+  ],
+  "profiles": [
+    {
+      "threads": 2,
+      "variant": "baseline",
+      "batch_size": 128,
+      "median_training_step_seconds": 0.10283939999862923,
+      "train_compute_minutes_per_45000_images": 0.6033244799919582,
+      "note": "Synthetic compute only; excludes augmentation, validation, I/O and thermal drift"
+    },
+    {
+      "threads": 2,
+      "variant": "conv1",
+      "batch_size": 128,
+      "median_training_step_seconds": 0.16837540000051376,
+      "train_compute_minutes_per_45000_images": 0.9878023466696807,
+      "note": "Synthetic compute only; excludes augmentation, validation, I/O and thermal drift"
+    },
+    {
+      "threads": 2,
+      "variant": "full",
+      "batch_size": 128,
+      "median_training_step_seconds": 0.17857080000067072,
+      "train_compute_minutes_per_45000_images": 1.0476153600039348,
+      "note": "Synthetic compute only; excludes augmentation, validation, I/O and thermal drift"
+    },
+    {
+      "threads": 4,
+      "variant": "baseline",
+      "batch_size": 128,
+      "median_training_step_seconds": 0.08408550000058312,
+      "train_compute_minutes_per_45000_images": 0.493301600003421,
+      "note": "Synthetic compute only; excludes augmentation, validation, I/O and thermal drift"
+    },
+    {
+      "threads": 4,
+      "variant": "conv1",
+      "batch_size": 128,
+      "median_training_step_seconds": 0.15266934999999648,
+      "train_compute_minutes_per_45000_images": 0.895660186666646,
+      "note": "Synthetic compute only; excludes augmentation, validation, I/O and thermal drift"
+    },
+    {
+      "threads": 4,
+      "variant": "full",
+      "batch_size": 128,
+      "median_training_step_seconds": 0.13762674999998126,
+      "train_compute_minutes_per_45000_images": 0.8074102666665567,
+      "note": "Synthetic compute only; excludes augmentation, validation, I/O and thermal drift"
+    },
+    {
+      "threads": 8,
+      "variant": "baseline",
+      "batch_size": 128,
+      "median_training_step_seconds": 0.07325454999954673,
+      "train_compute_minutes_per_45000_images": 0.4297600266640075,
+      "note": "Synthetic compute only; excludes augmentation, validation, I/O and thermal drift"
+    },
+    {
+      "threads": 8,
+      "variant": "conv1",
+      "batch_size": 128,
+      "median_training_step_seconds": 0.13564930000029563,
+      "train_compute_minutes_per_45000_images": 0.795809226668401,
+      "note": "Synthetic compute only; excludes augmentation, validation, I/O and thermal drift"
+    },
+    {
+      "threads": 8,
+      "variant": "full",
+      "batch_size": 128,
+      "median_training_step_seconds": 0.1442217499970866,
+      "train_compute_minutes_per_45000_images": 0.8461009333162414,
+      "note": "Synthetic compute only; excludes augmentation, validation, I/O and thermal drift"
+    }
+  ],
+  "classification_results": false
+}

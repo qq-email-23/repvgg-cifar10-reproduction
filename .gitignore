@@ -1,0 +1,8 @@
+__pycache__/
+.venv/
+data/
+*.pt
+*.tmp
+*.zip
+*.log
+results/**/test_predictions.npz

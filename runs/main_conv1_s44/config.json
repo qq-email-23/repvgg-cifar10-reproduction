@@ -1,0 +1,44 @@
+{
+  "data": "D:\\图像处理与视觉\\fasternet-reproduction\\data",
+  "variant": "conv1",
+  "seed": 44,
+  "epochs": 60,
+  "batch_size": 128,
+  "threads": 4,
+  "workers": 0,
+  "lr": 0.05,
+  "tag": "main",
+  "resume": false,
+  "stop_after": null,
+  "architecture": {
+    "widths": [
+      16,
+      32,
+      64,
+      128
+    ],
+    "depths": [
+      1,
+      2,
+      2,
+      2
+    ]
+  },
+  "split_sha256": "498677132be025d9aa57b8f3cfa1549764c22f7062730f7eb149f1217e2c8dd8",
+  "source_sha256": {
+    "model.py": "ebf0726407d05dc0b6e5a4c914b839d386acd389850b5329b26cf61874847ce2",
+    "train.py": "8717b7d59125a7f34375d16f0252fcd3690c1fc383d83fcb2a53e4b9b1124e43",
+    "common.py": "8cdadf823ec6f47e97e8c7ec16582f74ab75817f084d0909067cb78cc6e6541c"
+  },
+  "environment": {
+    "python": "3.11.2",
+    "torch": "2.9.1+cpu",
+    "torchvision": "0.24.1+cpu",
+    "numpy": "2.2.6",
+    "os": "Windows-10-10.0.26200-SP0",
+    "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "threads": 4,
+    "device": "cpu",
+    "logical_cpus": 16
+  }
+}

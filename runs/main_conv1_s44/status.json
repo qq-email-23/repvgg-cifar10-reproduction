@@ -1,0 +1,7 @@
+{
+  "epoch": 60,
+  "planned_epochs": 60,
+  "complete": true,
+  "best_val_accuracy_pct": 89.38,
+  "total_seconds": 4100.6941986999445
+}
