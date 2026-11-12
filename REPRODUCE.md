@@ -78,26 +78,54 @@ if ($RepActualHash -ne $RepExpectedHash) { throw 'ZIP checksum mismatch' }
 .\.venv\Scripts\python.exe -c "from torchvision.datasets import CIFAR10; CIFAR10('data', train=True, download=True); CIFAR10('data', train=False, download=True)"
 ```
 
-以下命令对九个组合分别从头训练，使用 **retrain** 标签，避免与仓库中 `main_*` 历史实验记录冲突：
+安装好环境后，可以使用一键脚本下载数据并训练全部九个组合（3 种方法 × 3 个种子）：
 
 ```powershell
-foreach ($RepSeed in @(42,43,44)) {
-    foreach ($RepVariant in @('baseline','conv1','full')) {
-        .\.venv\Scripts\python.exe -u train.py --data .\data --variant $RepVariant --seed $RepSeed --epochs 60 --batch-size 128 --threads 4 --lr 0.05 --tag retrain
-        if ($LASTEXITCODE -ne 0) { throw 'Training failed; check the output before continuing' }
-    }
-}
+.\run_all.ps1 -DownloadData
 ```
 
-如果中断，对相同参数追加 `--resume`，从最近完整轮次继续。不要直接用无参数的 `run_all.ps1` 从 GitHub 全新克隆开始训练：它面向作者的本机目录，且已提交的 `main_*` 配置会与新运行冲突。
+默认读取仓库中的 `.venv\Scripts\python.exe`，数据保存在 `data/`，训练 60 轮、batch=128、学习率 0.05、4 个 CPU 线程。新运行默认命名为 `retrain_*`，与论文原始 `main_*` 实验记录区分。已下载数据时不必加 `-DownloadData`。
 
-重训结束后，重新计算测试、转换与测速，例如：
+只检查环境、已有数据完整性及运行目录，不开始训练：
 
 ```powershell
-.\.venv\Scripts\python.exe evaluate_and_export.py --checkpoint .\runs\retrain_full_s42\best.pt --data .\data --threads 4 --repeats 30
+.\run_all.ps1 -CheckOnly
 ```
 
-对其他八个组合使用相应检查点路径。新结果保存在 `results/retrain_*/`，原始结果保留在 `results/main_*/`。不要直接用 `run_evaluation.ps1` 验证重训：它面向原始 `main_*` 全套运行。
+该检查需要先取得数据；`-CheckOnly` 不会下载数据。使用已有 Python 和数据目录时，可分别传入 `-Python '解释器完整路径' -Data '数据父目录完整路径'`。自定义路径相对于运行命令时的当前目录解析，默认路径相对于仓库解析。
+
+如果 PowerShell 提示禁止执行脚本，可仅在当前终端允许本地脚本后重试：
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+中断后使用相同命令重跑，脚本自动从已有 `last.pt` 继续；续训需要保持原来的轮数、线程等训练参数一致。需要进行另一组独立实验时，指定新的 `-Tag retrain2`；`main` 标签保留给论文原始实验。
+
+全部训练完成后，一键执行测试、转换、导出及测速：
+
+```powershell
+.\run_evaluation.ps1 -CheckOnly
+.\run_evaluation.ps1
+```
+
+评估脚本在开始前检查全部九个运行是否训练完成。新指标、部署权重和逐样本预测分别保存在 `results/retrain_*/`。原论文汇总表不自动改写，比较新实验时读取对应的新 `metrics.json`。已存在的结果目录会阻止重复评估，避免覆盖；若上次评估中断，先保留并移走该次生成的结果目录，再重试。使用自定义训练标签、种子或方法时，评估必须传入相同的 `-Tag`、`-Seeds`、`-Variants`，自定义 Python、数据目录也需一致。
+
+例如只重训并评估 full、seed=42（这是单模型演示，不是完整九组实验）：
+
+```powershell
+.\run_all.ps1 -Variants full -Seeds 42 -Tag demo -DownloadData
+.\run_evaluation.ps1 -Variants full -Seeds 42 -Tag demo
+```
+
+也可以不用 PowerShell 脚本，直接调用 Python：
+
+```powershell
+.\.venv\Scripts\python.exe -u train.py --data .\data --variant full --seed 42 --epochs 60 --batch-size 128 --threads 4 --lr 0.05 --tag manual
+.\.venv\Scripts\python.exe evaluate_and_export.py --checkpoint .\runs\manual_full_s42\best.pt --data .\data --threads 4 --repeats 30
+```
+
+直接调用 Python 续训时追加 `--resume`。其他八个组合替换 `--variant` 和 `--seed`。非 Windows 系统请使用此方式，并替换为相应的 Python 解释器路径。
 
 ## 6. 复现范围与限制
 

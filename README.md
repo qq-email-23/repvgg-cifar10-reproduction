@@ -70,6 +70,19 @@ full 的平均测试准确率高于 baseline **0.12 个百分点**，但不同�
 
 程序核对包内哈希、严格加载训练与部署权重、重新融合并比较参数，随后真实推理测试集，报告准确率、logits 误差、标签不一致数及是否与原记录一致。新输出保存在 verification/，不覆盖原始实验结果。
 
+## 从头重训与测速
+
+按 [复现指南](REPRODUCE.md) 安装环境后，在仓库根目录运行：
+
+```powershell
+# 下载数据，重训三种方法、三个种子（共九次，60 轮/次）
+.\run_all.ps1 -DownloadData
+# 训练全部完成后：重新测试、转换并测量当前设备上的推理延迟
+.\run_evaluation.ps1
+```
+
+默认使用仓库中的 `.venv` 和 `data/`，无需作者电脑的目录。新实验使用 `retrain_*` 名称，原论文结果保留；中断后重跑训练命令会自动续训。只核验论文已有结果时，使用上面的权重验证命令即可，无需重训。运行参数、检查模式和脚本执行策略说明见复现指南。
+
 ## 环境与权重
 
 原实验使用 Windows、Python 3.11.2、PyTorch 2.9.1+cpu、torchvision 0.24.1+cpu、NumPy 2.2.6、Pillow 12.1.0。依赖见 [requirements.txt](requirements.txt)，运行无需 NVIDIA GPU。
@@ -91,7 +104,7 @@ Release 的 repvgg_cifar10_v1.0_weights.zip 包含 **18 份权重**：三个方�
 | results/main_*/metrics.json | 原始测试结果、计时样本、环境及权重哈希 |
 | results/ | 汇总表与独立克隆验证记录 |
 | final_evaluation.py、summarize_results.py | 原始完整实验的评估与汇总工具 |
-| run_all.ps1、run_evaluation.ps1 | 原实验本机启动脚本，外部复现使用 REPRODUCE.md 中的命令 |
+| run_all.ps1、run_evaluation.ps1 | 使用仓库内环境与数据目录，一键重训及评估全部九个组合 |
 
 日志中的绝对路径只记录当时的运行位置，外部验证不依赖这些路径。从头训练使用新标签 retrain，避免与已提交的 main_* 实验记录冲突，步骤见复现指南。
 
